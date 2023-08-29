@@ -78,7 +78,7 @@ function App() {
 
     return data.feeds.map(({ id, name, url }: { id: string, name: string, url: string }) => (
       <div key={id}>
-        <a className="App-link" href={url}>{name}</a>
+        <a className="app-link" href={url}>{name}</a>
       </div>
     ));
   }
@@ -98,7 +98,7 @@ function App() {
     return data.feedFollows.map(({ id, user, feed }: { id: string, user: { id: string, name: string }, feed: { id: string, name: string, url: string } }) => (
       <div key={id}>
         <p>User: {user.name} </p>
-        <a className="App-link" href={feed.url}>{feed.name}</a>
+        <a className="app-link" href={feed.url}>{feed.name}</a>
       </div>
     ));
   }
@@ -136,7 +136,7 @@ function App() {
         url: string,
       }) => (
       <div key={id}>
-        <a className="App-link" href={url}>{title}</a>
+        <a className="app-link" href={url}>{title}</a>
         <small><p>Published: {publishedAt}</p></small>
         <p>{description}</p>
       </div>
@@ -144,49 +144,51 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <img src="https://go.dev/images/gophers/ladder.svg" alt="go-gopher" className="App-logo" />
-      <div className="App-header">
-        <h1 className="App-title">
+    <div className="app">
+      <img src="https://go.dev/images/gophers/ladder.svg" alt="go-gopher" className="app-logo" />
+      <div className="app-header">
+        <h1 className="app-title">
           Go RSS Aggregator
         </h1>
 
-        <p className="App-description">This is a project used to learn Go. Specifically a web server that exposes a GraphQL API, leveraging concurrent web scrapping to deliver the latest posts for each feed.</p>
+        <p className="app-description">This is a project used to learn Go. Specifically a web server that exposes a GraphQL API, leveraging concurrent web scrapping to deliver the latest posts for each feed.</p>
       </div>
 
-      <div className="row">
-        <div className="column">
-          <h2>Users</h2>
-          <DisplayUsers />
-        </div>
-
-        <div className="column">
-          <h2>Feeds</h2>
-          <DisplayFeeds />
-        </div>
-
-        <div className="column">
-          <h2>Feed Follows</h2>
-          <p>Get feeds for user: </p>
-
-          <div>
-            <input value={feedFollowUserSearch} onChange={e => { setFeedFollowUserSearch(e.target.value); setShowEmptyResult(false); setShowFeedFollowResults(false); }} />
-            <button onClick={() => { getUserFeedFollows(feedFollowUserSearch) }}>Get</button>
-            <button onClick={() => { setFeedFollowUserSearch(""); setShowEmptyResult(false); setShowFeedFollowResults(false); }}>clear</button>
+      <div className="app-body">
+        <div className="row">
+          <div className="column">
+            <h2>Users</h2>
+            <DisplayUsers />
           </div>
 
-          {showFeedFollowResults && feedFollowUserId ? (
-            <DisplayFeedFollows userId={feedFollowUserId} />
-          ) : null}
-          {showEmptyResult && <p>Oops, looks like this users is not following any feeds.</p>}
-        </div>
-      </div>
+          <div className="column">
+            <h2>Feeds</h2>
+            <DisplayFeeds />
+          </div>
 
-      <div className='row'>
-        <div className="column">
-          <div>
-            <h2>Posts</h2>
-            <DisplayPosts />
+          <div className="column">
+            <h2>Feed Follows</h2>
+            <p>Get feeds by user: </p>
+
+            <div>
+              <input value={feedFollowUserSearch} onChange={e => { setFeedFollowUserSearch(e.target.value); setShowEmptyResult(false); setShowFeedFollowResults(false); }} />
+              <button onClick={() => { getUserFeedFollows(feedFollowUserSearch) }}>Get</button>
+              <button onClick={() => { setFeedFollowUserSearch(""); setShowEmptyResult(false); setShowFeedFollowResults(false); }}>clear</button>
+            </div>
+
+            {showFeedFollowResults && feedFollowUserId ? (
+              <DisplayFeedFollows userId={feedFollowUserId} />
+            ) : null}
+            {showEmptyResult && <p>Oops, looks like this users is not following any feeds.</p>}
+          </div>
+        </div>
+
+        <div className='row'>
+          <div className="column">
+            <div>
+              <h2>Posts</h2>
+              <DisplayPosts />
+            </div>
           </div>
         </div>
       </div>

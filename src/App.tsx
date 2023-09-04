@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery, gql } from '@apollo/client';
 
 import './App.css';
+import { SearchBar } from './components/SearchBar';
 
 
 const GET_USERS = gql`
@@ -170,11 +171,16 @@ function App() {
             <h2>Feed Follows</h2>
             <p>Get feeds by user: </p>
 
-            <div>
-              <input value={feedFollowUserSearch} onChange={e => { setFeedFollowUserSearch(e.target.value); setShowEmptyResult(false); setShowFeedFollowResults(false); }} />
-              <button onClick={() => { getUserFeedFollows(feedFollowUserSearch) }}>Get</button>
-              <button onClick={() => { setFeedFollowUserSearch(""); setShowEmptyResult(false); setShowFeedFollowResults(false); }}>clear</button>
-            </div>
+            <SearchBar 
+              value={feedFollowUserSearch} 
+              onChange={e => { 
+                setFeedFollowUserSearch(e.target.value); 
+                setShowEmptyResult(false); 
+                setShowFeedFollowResults(false); 
+              }} 
+              onSubmit={() => { getUserFeedFollows(feedFollowUserSearch) }}
+              onClear={() => { setFeedFollowUserSearch(""); setShowEmptyResult(false); setShowFeedFollowResults(false); }}
+              />
 
             {showFeedFollowResults && feedFollowUserId ? (
               <DisplayFeedFollows userId={feedFollowUserId} />
